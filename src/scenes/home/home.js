@@ -30,6 +30,7 @@ import MentorRequest from './mentorRequest/mentorRequest';
 import SquadsNew from './squads/squadsNew/squadsNew';
 import CodeSchools from './codeSchools/codeSchools';
 import About from './about/about';
+import Press from './press/press';
 
 class Home extends Component {
   constructor(props) {
@@ -148,6 +149,10 @@ class Home extends Component {
             <Route
               path="/about"
               component={About}
+            />
+            <Route
+              path="/press"
+              component={Press}
             />
             <Route
               exact
