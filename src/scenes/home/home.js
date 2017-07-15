@@ -29,6 +29,7 @@ import MentorRequest from './mentorRequest/mentorRequest';
 import SquadsNew from './squads/squadsNew/squadsNew';
 import CodeSchools from './codeSchools/codeSchools';
 import About from './about/about';
+import Press from './press/press';
 import styles from './home.css';
 
 class Home extends Component {
@@ -148,6 +149,10 @@ class Home extends Component {
             <Route
               path="/about"
               component={About}
+            />
+            <Route
+              path="/press"
+              component={Press}
             />
             <Route
               exact
