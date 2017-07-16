@@ -9,12 +9,11 @@ class Contact extends Component {
     return (
       <div>
         <Section title="Contact Us" >
-          <p>
+          <p style={{ textAlign: 'center' }}>
             We are a decentralized community of hard-working volunteers, and we love hearing feedback, comments, and suggestions!
             <br />
             <br />
-            The best way to reach our staff and our members is by <Link to="join">joining Operation Code</Link> to receive an invite to our Slack team.
-            You can also reach us on via e-mail, physical, or <a href="twitter.com/operation_code">Twitter.</a>
+            The best way to reach our staff and our members is by <Link to="join">joining Operation Code</Link> to receive an invite to our Slack team. You can also reach us via email, physical mail, or via <a href="twitter.com/operation_code">Twitter.</a>
           </p>
         </Section>
 

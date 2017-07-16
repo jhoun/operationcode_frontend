@@ -30,10 +30,7 @@ import SquadsNew from './squads/squadsNew/squadsNew';
 import CodeSchools from './codeSchools/codeSchools';
 import About from './about/about';
 import Press from './press/press';
-<<<<<<< HEAD
 import styles from './home.css';
-=======
->>>>>>> 9f52da3e49ba08cb62aa76ec026821c2fc559b72
 
 class Home extends Component {
   constructor(props) {
