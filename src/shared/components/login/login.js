@@ -12,6 +12,7 @@ import FormButton from 'shared/components/form/formButton/formButton';
 import styles from './login.css';
 
 require('./login.css');
+const queryString = require('query-string');
 
 class Login extends Component {
 
@@ -21,7 +22,14 @@ class Login extends Component {
     password: '',
     passwordValid: false,
     authenticated: false,
-    error: ''
+    error: '',
+    sso: null,
+    sig: null,
+    ssoParamsPresent: false
+  }
+
+  componentDidMount = () => {
+    this.checkForSsoParams();
   }
 
   onEmailChange = (value, valid) => {
@@ -32,21 +40,44 @@ class Login extends Component {
     this.setState({ password: value, passwordValid: valid });
   }
 
+  setSsoParams = () => {
+    const parsed = queryString.parse(location.search);
+
+    if (this.state.ssoParamsPresent) {
+      this.state.sso = parsed.sso;
+      this.state.sig = parsed.sig;
+    }
+  }
+
+  checkForSsoParams = () => {
+    const parsed = queryString.parse(location.search);
+
+    if (parsed.sso && parsed.sig) { this.setState({ ssoParamsPresent: true }); }
+  }
+
   isFormValid = () => this.state.emailValid && this.state.passwordValid
 
   handleOnClick = (e) => {
     e.preventDefault = true;
+    this.setSsoParams();
+
     if (this.isFormValid()) {
       axios.post(`${config.backendUrl}/sessions`, {
         user: {
           email: this.state.email,
-          password: this.state.password
+          password: this.state.password,
+          sso: this.state.sso,
+          sig: this.state.sig
         }
       }).then(({ data }) => {
         CookieHelpers.setUserAuthCookie(data);
         this.setState({ authenticated: true });
         this.props.updateRootAuthState((history) => {
-          history.push('/');
+          if (this.state.ssoParamsPresent) {
+            window.location = data.redirect_to;
+          } else {
+            history.push(data.redirect_to);
+          }
         });
       }).catch((response) => {
         const error = _.get(response, 'message');
@@ -79,6 +110,5 @@ Login.propTypes = {
 Login.defaultProps = {
   updateRootAuthState: () => {}
 };
-
 
 export default Login;
